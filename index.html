@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Jeevita</title>
+    <style>
+      #start-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #ff4081;
+        color: white;
+        font-size: 20px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      #start-btn:hover {
+        background-color: #ff206e;
+      }
+
+      #start-btn:active {
+        transform: translate(-50%, -50%) scale(0.95);
+      }
+
+      /* Initially hide the root element */
+      #root {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Background Music -->
+    <audio id="background-music" loop>
+      <source src="/music.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Start Button -->
+    <button id="start-btn">Start</button>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const startButton = document.getElementById('start-btn');
+        const rootElement = document.getElementById('root');
+        const audio = document.getElementById('background-music');
+
+        startButton.addEventListener('click', () => {
+          // Play the background music
+          audio.play()
+            .then(() => console.log("Music started"))
+            .catch(err => console.error("Failed to play music:", err));
+
+          // Remove the Start button
+          startButton.style.display = 'none';
+
+          // Load and render the React app
+          import('./src/main.tsx')
+            .then(() => {
+              rootElement.style.display = 'block';
+              console.log('React app started.');
+            })
+            .catch(err => console.error('Failed to load React app:', err));
+        });
+      });
+    </script>
+  </body>
+</html>
